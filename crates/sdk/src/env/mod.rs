@@ -56,8 +56,11 @@ impl EnvProver {
                 Box::new(CpuProver::new())
             },
             "cuda" => {
+                println!("Using CUDA prover. Ensure you have the necessary CUDA setup.");
                 check_release_build();
-                Box::new(CudaProver::new(SP1Prover::new(), MoongateServer::default()))
+                let moongate_endpoint = env::var("MOONGATE_ENDPOINT")
+                    .ok();
+                Box::new(CudaProver::new(SP1Prover::new(), MoongateServer::new(moongate_endpoint)))
             }
             "network" => {
                 #[cfg(not(feature = "network"))]

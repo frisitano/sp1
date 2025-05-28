@@ -130,6 +130,15 @@ pub enum MoongateServer {
     Local { visible_device_index: Option<u64>, port: Option<u64> },
 }
 
+impl MoongateServer {
+    pub fn new(endpoint: Option<String>) -> Self {
+        match endpoint {
+            Some(url) => MoongateServer::External { endpoint: url },
+            None => MoongateServer::default(),
+        }
+    }
+}
+
 impl Default for MoongateServer {
     fn default() -> Self {
         Self::Local { visible_device_index: None, port: None }
