@@ -57,7 +57,7 @@ fn encode_g1(p: G1, out: &mut [u8; 64]) {
 }
 
 /// `zkvm_status zkvm_bn254_g1_add(p1, p2, result)`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bn254_g1_add(
     p1: *const Bn254G1Point,
     p2: *const Bn254G1Point,
@@ -82,7 +82,7 @@ pub unsafe extern "C" fn zkvm_bn254_g1_add(
 ///
 /// Scalar is a 32-byte big-endian integer; substrate-bn reduces it
 /// modulo the group order via `Fr::from_bytes_be_mod_order`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bn254_g1_mul(
     point: *const Bn254G1Point,
     scalar: *const Bn254Scalar,
@@ -107,7 +107,7 @@ pub unsafe extern "C" fn zkvm_bn254_g1_mul(
 ///
 /// Computes `Π e(p_i.g1, p_i.g2)` and writes `*verified = (product == 1)`.
 /// Empty input verifies as `true` per EIP-197.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bn254_pairing(
     pairs: *const Bn254PairingPair,
     num_pairs: usize,

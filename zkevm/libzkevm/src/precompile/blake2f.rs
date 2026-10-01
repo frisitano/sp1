@@ -68,7 +68,7 @@ fn write_u64_le(bytes: &mut [u8], i: usize, v: u64) {
 /// Updates `h` in place by running `rounds` iterations of the BLAKE2b
 /// round function with message block `m`, offset counters `t`, and
 /// final-block flag `f`. Pure software per EIP-152 / RFC 7693.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_blake2f(
     rounds: u32,
     h: *mut Blake2fState,

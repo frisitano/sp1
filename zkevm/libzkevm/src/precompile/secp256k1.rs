@@ -15,7 +15,7 @@ use k256::ecdsa::{RecoveryId, Signature, VerifyingKey};
 /// Pubkey layout per `zkvm_accelerators.h` is the raw 64-byte uncompressed
 /// `x || y` (no SEC1 `0x04` tag); we prepend `0x04` before handing it to
 /// `VerifyingKey::from_sec1_bytes`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_secp256k1_verify(
     msg: *const Secp256k1Hash,
     sig: *const Secp256k1Signature,
@@ -69,7 +69,7 @@ pub unsafe extern "C" fn zkvm_secp256k1_verify(
 /// `recid` is the standard ECDSA recovery id (0..=3); higher values are
 /// rejected. Output layout matches `zkvm_secp256k1_pubkey`: 64 bytes
 /// uncompressed `x || y`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_secp256k1_ecrecover(
     msg: *const Secp256k1Hash,
     sig: *const Secp256k1Signature,

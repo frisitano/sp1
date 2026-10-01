@@ -14,7 +14,7 @@ use p256::ecdsa::{Signature, VerifyingKey};
 ///
 /// Pubkey layout matches `zkvm_secp256k1_verify`: raw 64-byte
 /// uncompressed `x || y`; we prepend the SEC1 `0x04` tag before parsing.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_secp256r1_verify(
     msg: *const Secp256r1Hash,
     sig: *const Secp256r1Signature,

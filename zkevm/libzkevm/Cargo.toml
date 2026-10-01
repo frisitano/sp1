@@ -18,6 +18,13 @@ name = "zkevm"
 # expressible per-package in cargo).
 crate-type = ["rlib"]
 
+[features]
+default = ["exports"]
+# Exports the `zkvm_*` accelerators under their C ABI names (`#[no_mangle]`). Without it, a crate
+# wrapping libzkevm can export `zkvm_*` functions of its own that call them, for example to scope
+# each call's heap allocations.
+exports = []
+
 [dependencies]
 # Reuse SP1's no_std runtime. With default-features = false we drop the
 # `lib` (sp1-lib) and `libm` defaults; we still get the syscall number

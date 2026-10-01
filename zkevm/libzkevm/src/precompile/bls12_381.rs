@@ -130,7 +130,7 @@ fn decode_scalar(bytes: &[u8; 32]) -> Scalar {
     Scalar::from_bytes_wide(&le)
 }
 
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_g1_add(
     p1: *const Bls12381G1Point,
     p2: *const Bls12381G1Point,
@@ -151,7 +151,7 @@ pub unsafe extern "C" fn zkvm_bls12_g1_add(
     ZKVM_EOK
 }
 
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_g1_msm(
     pairs: *const Bls12381G1MsmPair,
     num_pairs: usize,
@@ -174,7 +174,7 @@ pub unsafe extern "C" fn zkvm_bls12_g1_msm(
     ZKVM_EOK
 }
 
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_g2_add(
     p1: *const Bls12381G2Point,
     p2: *const Bls12381G2Point,
@@ -195,7 +195,7 @@ pub unsafe extern "C" fn zkvm_bls12_g2_add(
     ZKVM_EOK
 }
 
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_g2_msm(
     pairs: *const Bls12381G2MsmPair,
     num_pairs: usize,
@@ -218,7 +218,7 @@ pub unsafe extern "C" fn zkvm_bls12_g2_msm(
     ZKVM_EOK
 }
 
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_pairing(
     pairs: *const Bls12381PairingPair,
     num_pairs: usize,
@@ -259,7 +259,7 @@ fn fp_from_be(bytes: &[u8; 48]) -> Option<bls12_381::fp::Fp> {
 /// `zkvm_status zkvm_bls12_map_fp_to_g1(...)` — Ethereum precompile 0x10
 /// (EIP-2537). Maps an Fp element to G1 via the SWU base map and clears
 /// the cofactor (multiply by `1 - z`).
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_map_fp_to_g1(
     field_element: *const Bls12381Fp,
     result: *mut Bls12381G1Point,
@@ -278,7 +278,7 @@ pub unsafe extern "C" fn zkvm_bls12_map_fp_to_g1(
 
 /// `zkvm_status zkvm_bls12_map_fp2_to_g2(...)` — Ethereum precompile 0x11
 /// (EIP-2537). Same as above for Fp2 → G2.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_bls12_map_fp2_to_g2(
     field_element: *const Bls12381Fp2,
     result: *mut Bls12381G2Point,

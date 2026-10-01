@@ -12,7 +12,7 @@ use num_bigint_dig::BigUint;
 ///
 /// `mod_len == 0` writes nothing and returns OK. `modulus == 0` follows
 /// EIP-198: result is zero (no division by zero error to surface).
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 #[allow(clippy::too_many_arguments)]
 pub unsafe extern "C" fn zkvm_modexp(
     base: *const u8,

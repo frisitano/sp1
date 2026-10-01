@@ -19,7 +19,7 @@ use kzg_rs::{Bytes32, Bytes48, KzgProof, KzgSettings};
 /// On parse error or pairing-check failure the function still returns
 /// `ZKVM_EOK` with `*verified = false` — only true API misuse (null
 /// pointers) surfaces as `ZKVM_EFAIL`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_kzg_point_eval(
     commitment: *const KzgCommitment,
     z: *const KzgFieldElement,

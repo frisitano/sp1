@@ -20,7 +20,7 @@ use tiny_keccak::{Hasher, Keccak};
 /// 32-byte digest to `*output`. The patched `tiny-keccak`'s inner
 /// `keccakf` is replaced with an `ecall` against SP1's `KECCAK_PERMUTE`
 /// precompile (`syscall = 0x00_01_01_09`) at `target_os = "zkvm"`.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_keccak256(
     data: *const u8,
     len: usize,
@@ -46,7 +46,7 @@ pub unsafe extern "C" fn zkvm_keccak256(
 /// `syscall_sha256_extend` + `syscall_sha256_compress` at
 /// `target_os = "zkvm"`, dispatching to SP1's `SHA_EXTEND`
 /// (`0x00_30_01_05`) + `SHA_COMPRESS` (`0x00_01_01_06`) precompiles.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_sha256(data: *const u8, len: usize, output: *mut Sha256Hash) -> i32 {
     if data.is_null() && len != 0 {
         return ZKVM_EFAIL;
@@ -67,7 +67,7 @@ pub unsafe extern "C" fn zkvm_sha256(data: *const u8, len: usize, output: *mut S
 /// SP1 path: no precompile; software impl via the stock RustCrypto `ripemd`
 /// crate. Output layout per the header is 12 zero bytes followed by 20 hash
 /// bytes — the 12-byte prefix is zeroed before writing the digest.
-#[no_mangle]
+#[cfg_attr(feature = "exports", no_mangle)]
 pub unsafe extern "C" fn zkvm_ripemd160(
     data: *const u8,
     len: usize,
