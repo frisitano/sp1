@@ -34,6 +34,10 @@ bump = []
 verify = ["dep:slop-algebra", "sp1-lib/verify"]
 blake3 = ["dep:blake3"]
 untrusted_programs = []
+# Allocate from a private buffer, leaving the memory after `_end` to the guest program that
+# links the static library (`zkevm/libzkevm-cabi`), and register no `critical-section`
+# implementation. Not with `bump`.
+staticlib = []
 may_dump_elf = []
 
 [lints]

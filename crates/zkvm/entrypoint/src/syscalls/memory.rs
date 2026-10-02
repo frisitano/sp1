@@ -60,9 +60,21 @@ pub unsafe extern "C" fn sys_alloc_aligned(bytes: usize, align: usize) -> *mut u
 /// Only available when the `embedded` feature is enabled.
 #[allow(clippy::missing_safety_doc)]
 #[no_mangle]
-#[cfg(all(target_os = "zkvm", not(feature = "bump")))]
+#[cfg(all(target_os = "zkvm", not(feature = "bump"), not(feature = "staticlib")))]
 pub unsafe extern "C" fn sys_alloc_aligned(bytes: usize, align: usize) -> *mut u8 {
     use core::alloc::GlobalAlloc;
     crate::allocators::embedded::INNER_HEAP
+        .alloc(core::alloc::Layout::from_size_align(bytes, align).unwrap())
+}
+
+/// Allocate memory aligned to the given alignment.
+///
+/// Only available when the `staticlib` feature is enabled.
+#[allow(clippy::missing_safety_doc)]
+#[no_mangle]
+#[cfg(all(target_os = "zkvm", not(feature = "bump"), feature = "staticlib"))]
+pub unsafe extern "C" fn sys_alloc_aligned(bytes: usize, align: usize) -> *mut u8 {
+    use core::alloc::GlobalAlloc;
+    crate::allocators::staticlib::HEAP
         .alloc(core::alloc::Layout::from_size_align(bytes, align).unwrap())
 }

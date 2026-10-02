@@ -18,6 +18,11 @@ name = "zkevm"
 # expressible per-package in cargo).
 crate-type = ["rlib"]
 
+[features]
+# For `libzkevm-cabi`: SP1's heap moves to a private buffer, leaving the memory after `_end` to
+# the guest program that links `libzkevm.a`.
+staticlib = ["sp1-zkvm/staticlib"]
+
 [dependencies]
 # Reuse SP1's no_std runtime. With default-features = false we drop the
 # `lib` (sp1-lib) and `libm` defaults; we still get the syscall number

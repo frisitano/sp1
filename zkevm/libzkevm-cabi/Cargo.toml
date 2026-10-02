@@ -16,7 +16,7 @@ crate-type = ["staticlib"]
 # All the `extern "C"` symbols are defined there with `#[no_mangle]`, so
 # linking this crate as a staticlib produces an archive containing those
 # symbols (plus `sp1-zkvm`'s _start, allocator, hasher, etc.).
-libzkevm = { path = "../libzkevm" }
+libzkevm = { path = "../libzkevm", features = ["staticlib"] }
 
 [profile.release]
 panic = "abort"

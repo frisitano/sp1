@@ -13,3 +13,6 @@
 // (the package name is `libzkevm` but the lib name is `zkevm`, so it's
 // imported as `zkevm` in Rust code).
 pub use zkevm::*;
+
+#[cfg(target_os = "zkvm")]
+mod atomic;
